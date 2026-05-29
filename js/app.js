@@ -25,10 +25,16 @@ const SortService = {
   },
 };
 
+const SPENDING_LIMIT = 100;
+
 // ---------------------------------------------------------------------------
 // BudgetService
-// Manages the user's budget limit and over-budget detection.
-// ---------------------------------------------------------------------------  
+// Stores spending limit for highlight feature.
+// ---------------------------------------------------------------------------
+const BudgetService = {
+  limit: 0
+};
+
 
 // ---------------------------------------------------------------------------
 // Validator
@@ -406,12 +412,23 @@ const UIRenderer = {
 
       const formattedAmount = `$${Number(transaction.amount).toFixed(2)}`;
 
+      const isOverLimit = transaction.amount > SPENDING_LIMIT;
+
+      if (isOverLimit) {
+        li.classList.add('over-limit');
+      }
+
       li.innerHTML = `
-        <span class="transaction-name">${_escapeHtml(transaction.name)}</span>
-        <span class="transaction-amount">${formattedAmount}</span>
-        <span class="transaction-category">${_escapeHtml(transaction.category)}</span>
-        <button class="delete-btn" data-id="${_escapeHtml(transaction.id)}" aria-label="Delete ${_escapeHtml(transaction.name)}">Delete</button>
-      `;
+      <span class="transaction-name">${_escapeHtml(transaction.name)}</span>
+      <span class="transaction-amount">${formattedAmount}</span>
+      <span class="transaction-category">${_escapeHtml(transaction.category)}</span>
+      <button
+        class="delete-btn"
+        data-id="${_escapeHtml(transaction.id)}"
+        aria-label="Delete ${_escapeHtml(transaction.name)}">
+        Delete
+      </button>
+    `;
 
       list.appendChild(li);
     });
