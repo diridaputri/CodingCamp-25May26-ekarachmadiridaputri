@@ -1,0 +1,474 @@
+/* css/styles.css — Expense & Budget Visualizer */
+
+/* ============================================================
+   CSS Variables — Theme Colors
+   ============================================================ */
+:root {
+  /* Light mode (default) */
+  --bg-page: #f5f5f5;
+  --bg-card: #ffffff;
+  --bg-input: #fafafa;
+  --bg-list-item: #fafafa;
+  --bg-list-hover: #f0f0f0;
+  --bg-badge: #ecf0f1;
+  --text-primary: #1a1a1a;
+  --text-secondary: #444;
+  --text-muted: #999;
+  --border: #e8e8e8;
+  --border-input: #ccc;
+  --header-bg: #2C687B;
+  --header-text: #ffffff;
+  --primary: #2C687B;
+  --primary-hover: #3d5166;
+  --success: #27ae60;
+  --danger: #e74c3c;
+  --danger-hover: #c0392b;
+  --shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+body.dark-mode {
+  /* Dark mode */
+  --bg-page: #1a1a1a;
+  --bg-card: #2d2d2d;
+  --bg-input: #3a3a3a;
+  --bg-list-item: #353535;
+  --bg-list-hover: #404040;
+  --bg-badge: #4a4a4a;
+  --text-primary: #f0f0f0;
+  --text-secondary: #d0d0d0;
+  --text-muted: #888;
+  --border: #444;
+  --border-input: #555;
+  --header-bg: #0f3540;
+  --header-text: #ffffff;
+  --primary: #3d8a9e;
+  --primary-hover: #2C687B;
+  --success: #2ecc71;
+  --danger: #e74c3c;
+  --danger-hover: #c0392b;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* ============================================================
+   1. Baseline Reset
+   ============================================================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif;
+  line-height: 1.5;
+  color: var(--text-primary);
+  background-color: var(--bg-page);
+  min-height: 100vh;
+}
+
+ul {
+  list-style: none;
+}
+
+button {
+  cursor: pointer;
+  font: inherit;
+}
+
+input,
+select,
+button {
+  border: none;
+  outline: none;
+}
+
+/* ============================================================
+   2. Header
+   ============================================================ */
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+#theme-toggle {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: var(--header-text);
+  font-size: 1.1rem;
+  padding: 0.35rem 0.6rem;
+  border-radius: 4px;
+  transition: background-color 0.2s, transform 0.2s;
+}
+
+#theme-toggle:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+  transform: scale(1.1);
+}
+
+header {
+  background-color: var(--primary);
+  color: #ffffff;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+header h1 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  flex: 1;             
+  text-align: center; 
+}
+
+#total-balance {
+  font-size: 1.1rem;
+  font-weight: 600;
+  background-color: rgba(255, 255, 255, 0.15);
+  padding: 0.25rem 0.75rem;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+/* ============================================================
+   3. Main Layout
+   ============================================================ */
+main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  grid-template-areas:
+    "form  chart"
+    "list  list";
+  gap: 1.25rem;
+  max-width: 960px;
+  margin: 1.5rem auto;
+  padding: 0 1.25rem;
+}
+
+/* ============================================================
+   4. Sections
+   ============================================================ */
+section {
+  background-color: var(--bg-card);
+  border-radius: 8px;
+  padding: 1.25rem;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+#form-section {
+  grid-area: form;
+}
+
+#chart-section {
+  grid-area: chart;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+#list-section {
+  grid-area: list;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+/* ============================================================
+   5. Form
+   ============================================================ */
+#transaction-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+#transaction-form label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+#transaction-form input,
+#transaction-form select {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border-input);
+  border-radius: 4px;
+  font-size: 0.95rem;
+  background-color: var(--bg-input);
+  transition: border-color 0.15s;
+}
+
+#transaction-form input:focus,
+#transaction-form select:focus {
+  color: var(--text-primary);
+  background-color: var(--bg-card);
+  outline: 2px solid rgba(44, 62, 80, 0.25);
+  outline-offset: 1px;
+}
+
+#transaction-form button[type="submit"] {
+  margin-top: 0.4rem;
+  padding: 0.6rem 1rem;
+  background-color: var(--primary);
+  color: #fff;
+  border-radius: 4px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: background-color 0.15s;
+}
+
+#transaction-form button[type="submit"]:hover {
+  background-color: #3d5166;
+}
+
+#transaction-form button[type="submit"]:focus-visible {
+  outline: 2px solid #2c3e50;
+  outline-offset: 2px;
+}
+
+
+/* ============================================================
+   6. Form Errors
+   ============================================================ */
+#form-errors {
+  margin-top: 0.5rem;
+  min-height: 1rem;
+}
+
+#form-errors span {
+  display: block;
+  font-size: 0.825rem;
+  color: #c0392b;
+  margin-top: 0.25rem;
+}
+
+/* ============================================================
+   7. Transaction List
+   ============================================================ */
+#list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+#list-header h2 {
+  margin: 0;
+}
+
+#sort-select {
+  padding: 0.4rem 0.75rem;
+  border: 1px solid var(--border-input);
+  border-radius: 4px;
+  background-color: var(--bg-input);
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+#sort-select option {
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+}
+
+#sort-select:hover {
+  border-color: #2C687B;
+}
+
+#sort-select:focus {
+  border-color: #2C687B;
+  outline: 2px solid rgba(44, 104, 123, 0.25);
+  outline-offset: 1px;
+}
+
+#transaction-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+#transaction-list li {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background-color: var(--bg-input);
+  font-size: 0.9rem;
+  transition: background-color 0.15s;
+}
+
+#transaction-list li:hover {
+  background-color: var(--bg-list-hover);
+}
+
+#transaction-list li .transaction-name {
+  font-weight: 600;
+  color: var(--text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 1.0rem;
+  font-weight: bold;
+}
+
+#transaction-list li .transaction-amount {
+  font-weight: 700;
+  color: var(--success);
+  white-space: nowrap;
+  font-size: 1.0rem;
+   text-align: right;
+}
+
+#transaction-list li .transaction-category {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  background-color: var(--bg-badge);
+  padding: 0.25rem 0.7rem;
+  border-radius: 4px;
+  white-space: nowrap;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-align: center;
+  justify-self: center;
+  
+}
+
+#transaction-list li button[data-id] {
+  padding: 0.35rem 0.8rem;
+  background-color: #e74c3c;
+  color: #fff;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  transition: background-color 0.15s;
+  justify-self: end;
+}
+
+#transaction-list li button[data-id]:hover {
+  background-color: #c0392b;
+}
+
+#transaction-list li button[data-id]:focus-visible {
+  outline: 2px solid #e74c3c;
+  outline-offset: 2px;
+}
+
+#item-category:invalid {
+  color: #555;
+}
+
+#item-category:valid {
+  color: var(--text-primary);
+}
+
+#item-category option {
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+}
+
+#item-category option[disabled] {
+  color: var(--text-muted);
+}
+
+#item-category option {
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+}
+
+#item-category option[disabled] {
+  color: var(--text-muted);
+}
+
+/* ============================================================
+   8. Placeholders (list & chart)
+   ============================================================ */
+#list-placeholder,
+#chart-placeholder {
+  text-align: center;
+ color: var(--text-muted);
+  font-size: 0.9rem;
+  padding: 1rem 0;
+  font-style: italic;
+}
+
+/* ============================================================
+   9. Error Banner
+   ============================================================ */
+#error-banner {
+  position: fixed;
+  bottom: 1.25rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #c0392b;
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  max-width: 90vw;
+  text-align: center;
+}
+
+/* hidden attribute hides the banner */
+#error-banner[hidden] {
+  display: none;
+}
+
+/* ============================================================
+   10. Canvas / Chart Section
+   ============================================================ */
+#pie-chart {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* ============================================================
+   11. Responsive — narrow viewports (≤ 600 px)
+   ============================================================ */
+@media (max-width: 600px) {
+  main {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "form"
+      "chart"
+      "list";
+  }
+
+  header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+
+  #list-section {
+    max-height: 300px;
+  }
+
+  #transaction-list li {
+    flex-wrap: wrap;
+  }
+}
