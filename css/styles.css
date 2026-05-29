@@ -299,6 +299,13 @@ section {
   outline-offset: 1px;
 }
 
+#spending-limit {
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.2rem 0.50rem;
+  background-color:#e74c3c;
+}
+
 #transaction-list {
   display: flex;
   flex-direction: column;
@@ -320,6 +327,24 @@ section {
 
 #transaction-list li:hover {
   background-color: var(--bg-list-hover);
+}
+
+.over-limit {
+  border: 2px solid #e74c3c !important;
+  background-color: rgba(231, 76, 60, 0.12) !important;
+}
+
+.over-limit .transaction-amount {
+  color: #e74c3c !important;
+}
+
+.limit-badge {
+  background: #e74c3c;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  margin-left: 8px;
 }
 
 #transaction-list li .transaction-name {
